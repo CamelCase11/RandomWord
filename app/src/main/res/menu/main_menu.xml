@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/delete_all_words"
+        android:title="@string/delete_all_words" />
+
+    <item
+        android:id="@+id/rate_and_review"
+        android:title="@string/rate_and_review" />
+
+    <item
+        android:id="@+id/dark_theme"
+        android:title="@string/switch_to_dark_theme"/>
+
+    <item
+        android:id="@+id/light_theme"
+        android:title="@string/switch_to_light_theme"/>
+
+</menu>

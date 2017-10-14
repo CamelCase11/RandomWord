@@ -7,8 +7,8 @@ android {
         applicationId "camelcase.randomword"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.04"
+        versionCode 6
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
@@ -22,7 +22,10 @@ android {
     }
 }
 repositories {
-    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://maven.google.com'
+    }
 }
 
 dependencies {
@@ -30,7 +33,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:customtabs:26.1.0'
     testCompile 'junit:junit:4.12'
 }

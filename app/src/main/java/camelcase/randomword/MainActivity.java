@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,30 +21,40 @@ public class MainActivity extends AppCompatActivity{
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private static final String SHARED_PREFS_NAME = "THEME_PREF";
+    private boolean darkTheme;
+    private CustomTabsIntent.Builder builder;
+    private CustomTabsIntent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
-        mUtils = new Utils(this);
 
-        if (!mUtils.isNetConnected()) {
-            Snackbar.make(coordinatorLayout,"Please connect to the internet", BaseTransientBottomBar.LENGTH_SHORT).show();
-        }
-
+        // check for theme settings
         sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME,MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("DARK_THEME_SET",false)){
-            getTheme().applyStyle(R.style.DarkTheme,true);
+        darkTheme = sharedPreferences.getBoolean("DARK_THEME_SET",false);
+        if (darkTheme){
+            setTheme(R.style.DarkTheme);
         } else {
             setTheme(R.style.AppTheme);
         }
 
+        setContentView(R.layout.activity_main);
+
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.activity_main);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        mUtils = new Utils(this);
+        if (!mUtils.isNetConnected()) {
+            Snackbar.make(coordinatorLayout,"Please connect to the internet", BaseTransientBottomBar.LENGTH_SHORT).show();
+        }
         mViewPagerFragment = new ViewPagerFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, mViewPagerFragment)
                 .commit();
+
+        builder = new CustomTabsIntent.Builder();
+        intent = builder.build();
     }
 
     @Override
@@ -67,21 +79,20 @@ public class MainActivity extends AppCompatActivity{
                 }
                 return true;
 
-            case R.id.dark_theme:
+            case R.id.change_theme:
                 editor = sharedPreferences.edit();
-                editor.putBoolean("DARK_THEME_SET",true);
+                if (darkTheme) {
+                    editor.putBoolean("DARK_THEME_SET", false);
+                } else {
+                    editor.putBoolean("DARK_THEME_SET",true);
+                }
                 editor.apply();
                 finish();
                 startActivity(getIntent());
                 return true;
 
-            case R.id.light_theme:
-                editor = sharedPreferences.edit();
-                editor.putBoolean("DARK_THEME_SET",false);
-                editor.apply();
-                finish();
-                startActivity(getIntent());
-                return true;
+            case R.id.donate:
+                intent.launchUrl(this,Uri.parse("https://paypal.me/MohitTank"));
 
             default:
                 return false;

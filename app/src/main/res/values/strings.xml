@@ -6,6 +6,6 @@
     <string name="rate_and_review">Rate and Review</string>
     <string name="hello">Hello</string>
     <string name="hello_word">Hello</string>
-    <string name="switch_to_dark_theme">Switch to dark theme</string>
-    <string name="switch_to_light_theme">Switch to light theme</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="donate">Donate</string>
 </resources>

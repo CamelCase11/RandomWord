@@ -9,11 +9,9 @@
         android:title="@string/rate_and_review" />
 
     <item
-        android:id="@+id/dark_theme"
-        android:title="@string/switch_to_dark_theme"/>
+        android:id="@+id/change_theme"
+        android:title="@string/change_theme" />
 
-    <item
-        android:id="@+id/light_theme"
-        android:title="@string/switch_to_light_theme"/>
-
+    <item android:id="@+id/donate"
+        android:title="@string/donate"/>
 </menu>
